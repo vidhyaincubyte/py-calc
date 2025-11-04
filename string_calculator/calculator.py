@@ -34,9 +34,17 @@ class StringCalculator:
     def _split_numbers(self, delimiters):
         pattern = "|".join(map(re.escape, delimiters))
         number_strings = re.split(pattern, self._numbers_str)
+
+        processed = []
+        for i, value in enumerate(number_strings):
+            if value == "" and i > 0 and number_strings[i - 1].isdigit():
+                number_strings[i + 1] = "-" + number_strings[i + 1]
+                continue
+            processed.append(value)
+
         self._numbers = [
             int(value)
-            for value in number_strings
+            for value in processed
             if value.lstrip('-').isdigit() and int(value) <= self.MAX_NUMBER
         ]
 

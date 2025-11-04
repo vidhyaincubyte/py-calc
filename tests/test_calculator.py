@@ -65,6 +65,16 @@ def test_multiple_long_delimiters(sc):
     assert sc.add("//[***][$$][%%%]\n1***2%%%3***4%%%5$$6") == 21
     assert sc.add("//[***][$$][%%%]\n1***2%%%3***4%%%5$$$6") == 15
 
-@pytest.mark.parametrize("a,b, expected",[(1,2,3),(3,4,7)])
-def test_with_parameter(a,b, expected, sc):
+
+@pytest.mark.parametrize("a,b, expected", [(1, 2, 3), (3, 4, 7)])
+def test_with_parameter(a, b, expected, sc):
     assert sc.add(f"{a},{b}") == expected
+
+def test_custom_negative_delimiter():
+    sc = StringCalculator()
+    try:
+        sc.add("//-\n1--2")
+    except ValueError as e:
+        assert "Negatives not allowed" in str(e)
+    else:
+        assert False, "Expected ValueError for negative numbers"
