@@ -70,6 +70,7 @@ def test_multiple_long_delimiters(sc):
 def test_with_parameter(a, b, expected, sc):
     assert sc.add(f"{a},{b}") == expected
 
+
 def test_custom_negative_delimiter():
     sc = StringCalculator()
     try:

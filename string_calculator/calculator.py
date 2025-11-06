@@ -1,13 +1,13 @@
 import re
-import sys  # unused import
+
 
 class StringCalculator:
-    MAX_NUMBER=1000    # missing spaces around operator
-    DEFAULT_DELIMITER=","
-    NEWLINE="\n"
-    CUSTOM_DELIMITER_PREFIX="//"
-    MULTI_DELIMITER_PREFIX="//["
-    MULTI_DELIMITER_REGEX=r"\[(.*?)]"     # too many spaces before comment
+    MAX_NUMBER = 1000
+    DEFAULT_DELIMITER = ","
+    NEWLINE = "\n"
+    CUSTOM_DELIMITER_PREFIX = "//"
+    MULTI_DELIMITER_PREFIX = "//["
+    MULTI_DELIMITER_REGEX = r"\[(.*?)]"  # too many spaces before comment
 
     def __init__(self):
         self._numbers_str = ""
@@ -30,7 +30,9 @@ class StringCalculator:
             self._numbers_str = self._numbers_str.split(self.NEWLINE, 1)[1]
 
     def _normalize_newlines(self):
-        self._numbers_str = self._numbers_str.replace(self.NEWLINE, self.DEFAULT_DELIMITER)
+        self._numbers_str = self._numbers_str.replace(
+            self.NEWLINE, self.DEFAULT_DELIMITER
+        )
 
     def _split_numbers(self, delimiters):
         pattern = "|".join(map(re.escape, delimiters))
@@ -46,16 +48,14 @@ class StringCalculator:
         self._numbers = [
             int(value)
             for value in processed
-            if value.lstrip('-').isdigit() and int(value) <= self.MAX_NUMBER
+            if value.lstrip("-").isdigit() and int(value) <= self.MAX_NUMBER
         ]
 
-    def add(self,numbers_str:str)->int:   # missing spaces after comma and around colons
-        x = 10  # unused variable
+    def add(self, numbers_str: str) -> int:
         if not numbers_str:
             return 0
-        
-        
-        self._numbers_str = numbers_str  # too many blank lines above
+
+        self._numbers_str = numbers_str
         delimiters = self._extract_delimiters()
         self._remove_custom_delimiter()
         self._normalize_newlines()
