@@ -20,7 +20,14 @@ jobs:
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install pytest
+          python3 -m pip install pytest flake8 black
+
+      - name: Run linting
+        run: |
+          # Check code formatting with black
+          black --check .
+          # Check code style with flake8
+          flake8 .
 
       - name: Run tests
         run: python3 -m pytest -v
